@@ -38,13 +38,14 @@ class Agent():
 
     async def _on_game_tick(self, tick_number, game_state):
 
+        
         # get my units
         my_agent_id = game_state.get("connection").get("agent_id")
         my_units = game_state.get("agents").get(my_agent_id).get("unit_ids")
-
+        
         # send each unit a random action
         for unit_id in my_units:
-
+            '''
             action = random.choice(actions)
 
             if action in ["up", "left", "right", "down"]:
@@ -58,6 +59,8 @@ class Agent():
                     await self._client.send_detonate(x, y, unit_id)
             else:
                 print(f"Unhandled action: {action} for unit {unit_id}")
+            '''
+            action = "up"
 
 
 def main():
