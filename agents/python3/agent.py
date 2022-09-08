@@ -42,24 +42,10 @@ class Agent():
         # get my units
         my_agent_id = game_state.get("connection").get("agent_id")
         my_units = game_state.get("agents").get(my_agent_id).get("unit_ids")
-        
+
         # send each unit a random action
         for unit_id in my_units:
-            '''
-            action = random.choice(actions)
 
-            if action in ["up", "left", "right", "down"]:
-                await self._client.send_move(action, unit_id)
-            elif action == "bomb":
-                await self._client.send_bomb(unit_id)
-            elif action == "detonate":
-                bomb_coordinates = self._get_bomb_to_detonate(unit_id)
-                if bomb_coordinates != None:
-                    x, y = bomb_coordinates
-                    await self._client.send_detonate(x, y, unit_id)
-            else:
-                print(f"Unhandled action: {action} for unit {unit_id}")
-            '''
             # this unit's location
             unit_location = game_state["unit_state"][unit_id]["coordinates"]   
 
@@ -70,13 +56,14 @@ class Agent():
             empty_tiles = self._get_empty_tiles(surrounding_tiles)
 
             if empty_tiles:
+
                 # choose an empty tile to walk to
                 random_tile = random.choice(empty_tiles)
                 action = self._move_to_tile(random_tile, unit_location)
 
             else:
                 # we're trapped
-                action = ''
+                action = 'bomb'
 
             if action in ["up", "left", "right", "down"]:
                 await self._client.send_move(action, unit_id)
